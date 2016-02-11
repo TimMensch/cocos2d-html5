@@ -338,7 +338,7 @@ cc.MenuItemLabel = cc.MenuItem.extend(/** @lends cc.MenuItemLabel# */{
     },
     /**
      * return the string of cc.MenuItemLabel
-     * @returns {*|string|_p.string|ret.string|q.string|String}
+     * @returns {String}
      */
     getString: function () {
         return this._label.string;
