@@ -33,7 +33,7 @@
  * @property {cc.GridBase}  grid    - Grid object that is used when applying effects
  * @property {cc.Node}      target  - <@writeonly>Target
  */
-cc.NodeGrid = cc.Node.extend({
+cc.NodeGrid = cc.Node.extend(/** @lends cc.NodeGrid# */{
     grid: null,
     _target: null,
     _gridRect:null,
@@ -61,7 +61,7 @@ cc.NodeGrid = cc.Node.extend({
 
     /**
      * @brief Set the effect grid rect.
-     * @param {cc.rect} rect.
+     * @param {cc.rect} rect
      */
     setGridRect: function (rect) {
         this._gridRect = rect;
