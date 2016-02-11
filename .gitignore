@@ -8,3 +8,8 @@ node_modules
 /package
 /tools/jsdoc_toolkit/jsdoc_toolkit-2.4.0
 /.project
+/tools/jsdoc_toolkit/out
+/tools/jsdoc_toolkit/app
+/tools/jsdoc_toolkit/templates
+/tools/jsdoc_toolkit/java
+/tools/jsdoc_toolkit/jsrun.jar
