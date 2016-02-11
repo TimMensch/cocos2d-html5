@@ -1,0 +1,12 @@
+{
+    "plugins": ["plugins/enum"],
+    "source": {
+        "include":["cocos2d"]
+    },
+    "opts": {
+        "template": "templates/haruki",
+        "encoding": "utf8",
+        "destination": "./out/",
+        "recurse": true
+    }
+}
