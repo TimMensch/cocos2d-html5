@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/cocos2d/cocos2d-html5/issues"
   },
-  "homepage": "https://github.com/cocos2d/cocos2d-html5#readme"
+  "homepage": "https://github.com/cocos2d/cocos2d-html5#readme",
+  "dependencies": {
+    "array-uniq": "^1.0.2",
+    "node.extend": "^1.1.5"
+  }
 }
