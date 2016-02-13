@@ -3,16 +3,16 @@ var arrayUniq = require('array-uniq');
 var extend = require('node.extend');
 
 var memberTypes = {
-	"Node.RenderCmd" :"any",
-	"math.Matrix4":"Matrix4",
-	"Number":"number",
-	"Boolean" :"boolean",
-	"String" :"string",
-	"Null" :"null",
-	"Array":"Array<any>",
+    "Node.RenderCmd" :"any",
+    "math.Matrix4":"Matrix4",
+    "Number":"number",
+    "Boolean" :"boolean",
+    "String" :"string",
+    "Null" :"null",
+    "Array":"Array<any>",
     "object":"any",
-	"Class":"any",
-	"Bool":"boolean",
+    "Class":"any",
+    "Bool":"boolean",
     "ProgressTimer.TYPE_RADIAL":"number",
     "ProgressTimer.TYPE_BAR":"number",
     "CatmullRomBy":"any",
@@ -220,11 +220,19 @@ function dumpObject(node,isClass) {
 
 var lastScope = tree;
 
-function getTypes(type) {
+function getTypes(type,nullable) {
     var types = [];
+    if (nullable) {
+        types.push( "null" );
+    }
     if (type && type.names) {
         for (var j=0; j<type.names.length; ++j) {
             types.push(fixType(type.names[j]));
+            // If any of them are "any", just return
+            // "any"
+            if (types[types.length-1]==="any") {
+                return "any";
+            }
         }
     } else {
         return "any";
@@ -299,7 +307,7 @@ exports.handlers = {
         prototypes[path.normalize(e.filename).toLowerCase()]=startingPoints;
     },
     newDoclet: function(e) {
-        // if (e.doclet.name.includes("Node")) {
+        // if (e.doclet.name.includes("LayerColor")) {
         //     console.log(e.doclet);
         // }
 
@@ -391,9 +399,11 @@ exports.handlers = {
                 if (param.name.indexOf("*")===0) {
                     param.name = "..."+param.name.substr(1);
                 }
-                paramString += param.name.replace(/=/,"","g") + ":";
-
-                paramString += getTypes(param.type);
+                paramString += param.name.replace(/=/,"","g") ;
+                if (param.optional) {
+                    paramString += "?";
+                }
+                paramString += ":" + getTypes(param.type);
                 if (i<params.length-1) {
                     paramString+=",";
                 }
@@ -411,7 +421,7 @@ exports.handlers = {
 
         if (e.doclet.returns) {
             thisNode.kind = "function";
-            thisNode.returns = getTypes(e.doclet.returns[0].type);
+            thisNode.returns = getTypes(e.doclet.returns[0].type,e.doclet.returns[0].nullable);
         }
         if (e.doclet.properties) {
             for (var prop in e.doclet.properties) {
