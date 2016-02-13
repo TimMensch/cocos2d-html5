@@ -5,6 +5,31 @@ Cocos2d-html5
 It incorporates the same high level api as “Cocos2d JS-binding engine” and compatible with Cocos2d-X.
 It currently supports canvas and WebGL renderer.
 
+TimM's Tweaks
+--------------
+This modified branch contains two major changes:
+
+   * Various documentation comments throughout the code have been fixed/patched
+     to be consistent and to not throw errors when generating documentation.
+   * A conf.json has been added to support generating JavaScript documentation
+     using the Node version of jsdoc 3.x.
+
+This was done not because I'm naturally anal about documentation, but because
+I also am using jsdoc to create FlowType-style declarations for Cocos2d-html5.
+The version created right now is VERY preliminary. As I test it with more
+of Cocos2d-html5 I'll post more information. These commands should create
+the current version of the FlowType declarations file:
+
+```shell
+npm install
+jsdoc -c conf.json > cocos2d.d.js
+```
+
+I just hacked this together over the past couple of days, so don't expect it to
+all work perfectly yet. Once this is working you should be able to use
+[FlowType][9] to statically analyze your code, verifying that you're (mostly)
+using Cocos2d-html5 correctly.
+
 Cross Platform
 -------------
    * Popular browsers:  Chrome 14+, Safari 5.0+, IE9+, Firefox 3.5+.
@@ -41,7 +66,7 @@ Contact us
    * Forum: [http://forum.cocos2d-x.org][5]
    * Twitter: [http://www.twitter.com/cocos2dhtml5][6]
    * Sina Microblog: [http://t.sina.com.cn/cocos2dhtml5][7]
-   
+
 [1]: http://www.cocos2d-x.org "Cocos2d-html5"
 [2]: http://www.cocos2d-x.org "Cocos2d-X"
 [3]: http://www.cocos2d-x.org "www.cocos2d-x.org"
@@ -50,3 +75,4 @@ Contact us
 [6]: http://www.twitter.com/cocos2dhtml5 "http://www.twitter.com/cocos2dhtml5"
 [7]: http://t.sina.com.cn/cocos2dhtml5 "http://t.sina.com.cn/cocos2dhtml5"
 [8]: http://bower.io "http://bower.io"
+[9]: http://flowtype.org
