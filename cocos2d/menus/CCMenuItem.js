@@ -1338,7 +1338,6 @@ cc.defineGetterSetter(_p, "selectedIndex", _p.getSelectedIndex, _p.setSelectedIn
  * The inner items can be any MenuItem
  * @deprecated since v3.0 please use new cc.MenuItemToggle(params) instead
  * @return {cc.MenuItemToggle}
- * @example
  */
 cc.MenuItemToggle.create = function (/*Multiple arguments follow*/) {
     if ((arguments.length > 0) && (arguments[arguments.length - 1] == null))
