@@ -186,6 +186,11 @@ function dumpObject(node,isClass) {
             var name= node.name;
             if (name==="ctor")
                 name = "constructor";
+
+            // Constructors are implicitly static
+            if (name==="constructor") {
+                node.scope = "instance";
+            }
             if (name.includes(".")) {
                 name = name.substr(name.lastIndexOf('.')+1);
             }
@@ -307,7 +312,7 @@ exports.handlers = {
         prototypes[path.normalize(e.filename).toLowerCase()]=startingPoints;
     },
     newDoclet: function(e) {
-        // if (e.doclet.name.includes("LayerColor")) {
+        // if (e.doclet.name.includes("SHOW_ALL")) {
         //     console.log(e.doclet);
         // }
 
@@ -362,9 +367,16 @@ exports.handlers = {
             parent = e.doclet.augments[0];
         }
         var thisNode;
-
+        if (e.doclet.comment.includes("@static")) {
+            e.doclet.scope = "static";
+        }
         if (e.doclet.name in node.children) {
             thisNode = node.children[e.doclet.name]
+            // Don't let an instance definition override a static
+            // on the same class.
+            if (thisNode.scope!=="static") {
+                thisNode.scope=e.doclet.scope;
+            }
         } else {
             thisNode = node.children[e.doclet.name]={
                 name:e.doclet.name,
