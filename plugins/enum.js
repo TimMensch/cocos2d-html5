@@ -100,7 +100,8 @@ function dumpObject(node,isClass) {
         inNamespace= true;
         console.log("declare module cocos2d {");
         dumpChildren(node);
-        console.log("}");
+        console.log("}\n");
+        console.log("declare var cc : typeof cc ;");
         inNamespace= false;
         return;
     }
