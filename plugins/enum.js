@@ -101,7 +101,6 @@ function dumpObject(node,isClass) {
         console.log("declare module cocos2d {");
         dumpChildren(node);
         console.log("}\n");
-        console.log("declare var cc : typeof cc ;");
         inNamespace= false;
         return;
     }
@@ -312,10 +311,6 @@ exports.handlers = {
         prototypes[path.normalize(e.filename).toLowerCase()]=startingPoints;
     },
     newDoclet: function(e) {
-        // if (e.doclet.name.includes("SHOW_ALL")) {
-        //     console.log(e.doclet);
-        // }
-
         if (e.doclet.longname.match(/[\/<>~]/)) {
             return;
         }
