@@ -68,8 +68,7 @@ var tree = {
             kind: "class",
             name: "cc",
             children:{
-                ActionInterval : simpleClass("ActionInterval"),
-                loader : simpleClass("loader")
+                ActionInterval : simpleClass("ActionInterval")
             }
         },
     }
@@ -211,7 +210,7 @@ function dumpObject(node,isClass) {
                 if (node.scope==="static") {
                     console.log("\tstatic",node.name,":"+type+";");
                 } else {
-                    console.log("\t",node.name,":"+type+";");
+                    console.log("\t"+node.name,":"+type+";");
                 }
             } else {
                 console.log("declare var",node.name,":"+type+";");
