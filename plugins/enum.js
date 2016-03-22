@@ -36,7 +36,8 @@ var memberTypes = {
     "AssetsManager":"any",
     "int":"number",
     "float":"number",
-    "long":"number"
+    "long":"number",
+    "DrawingPrimitiveCanvas":"DrawingPrimitive"
 };
 
 function simpleClass(name) {
@@ -119,6 +120,9 @@ function dumpObject(node,isClass) {
             inNamespace = false;
             break;
         case "class" :
+            if (node.name==="DrawingPrimitiveCanvas") {
+                node.name = "DrawingPrimitive";
+            }
             if (inClass) {
                 var className = node.name;
                 var classTarget = node.name;
@@ -316,7 +320,7 @@ exports.handlers = {
         if (e.doclet.undocumented){
             return;
         }
-        if (e.doclet.name.indexOf("_")===0) {
+        if (e.doclet.name.indexOf("_")===0 && !e.doclet.longname.includes("_drawingUtil")) {
             return;
         }
         var memberof = e.doclet.memberof;
