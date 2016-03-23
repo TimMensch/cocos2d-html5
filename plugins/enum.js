@@ -186,8 +186,6 @@ function dumpObject(node,isClass) {
             var returns = node.returns || "any";
             node.params = node.params || "";
             var name= node.name;
-            if (name==="ctor")
-                name = "constructor";
 
             // Constructors are implicitly static
             if (name==="constructor") {
@@ -448,6 +446,10 @@ exports.handlers = {
             }
         }
 
+        if (e.doclet.name==="ctor") {
+            thisNode.params = "...p:any";
+            thisNode.returns = "any";
+        }
         if (e.doclet.name==='create') {
             thisNode.params = "...p:any";
             thisNode.returns = "any";
@@ -465,7 +467,7 @@ exports.handlers = {
             thisNode.params = "...p:any";
         }
         if (e.doclet.name==='addChild') {
-            thisNode.params = "child:Node,localZOrder:number,tag:number|string|Point";
+            thisNode.params = "child:Node,localZOrder:number,tag?:number|string|Point";
         }
         if (e.doclet.name==='removeChild') {
             thisNode.params = "child:Node";
