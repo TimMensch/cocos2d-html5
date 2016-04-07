@@ -27,6 +27,12 @@
  */
 
 (function(cc){
+    /**
+     * A 2d vector.
+     * @class
+     * @param {number} [x]
+     * @param {number} [y]
+     */
     cc.math.Vec2 = function (x, y) {
         if(y === undefined){
             this.x = x.x;
@@ -37,56 +43,91 @@
         }
     };
 
-    var proto = cc.math.Vec2.prototype;
-    proto.fill = function(x, y){   // = cc.kmVec2Fill
+    var _p = cc.math.Vec2.prototype;
+    _p.fill = function(x, y){   // = cc.kmVec2Fill
         this.x = x;
         this.y = y;
     };
 
-    proto.length = function(){   // = cc.kmVec2Length
+    _p.length = function(){   // = cc.kmVec2Length
         return Math.sqrt(cc.math.square(this.x) + cc.math.square(this.y));
     };
 
-    proto.lengthSq = function(){   // = cc.kmVec2LengthSq
+    _p.lengthSq = function(){   // = cc.kmVec2LengthSq
         return cc.math.square(this.x) + cc.math.square(this.y);
     };
 
-    proto.normalize = function(){  // = cc.kmVec2Normalize
+    _p.normalize = function(){  // = cc.kmVec2Normalize
         var l = 1.0 / this.length();
         this.x *= l;
         this.y *= l;
         return this;
     };
 
+    /**
+     * Add two Vec2 objects and/or Points.
+     *
+     * @param {cc.Vec2|cc.Point} pOut An object to receive the new value.
+     * @param {cc.Vec2|cc.Point} pV1  First element to add.
+     * @param {cc.Vec2|cc.Point} pV2  Second element to add.
+     */
     cc.math.Vec2.add = function (pOut, pV1, pV2) {     // = cc.kmVec2Add
         pOut.x = pV1.x + pV2.x;
         pOut.y = pV1.y + pV2.y;
         return pOut
     };
 
-    proto.add = function(vec){   // = cc.kmVec2Add
+    /**
+     * Add a Vec2 object and/or Point to this Vec2.
+     *
+     * @param {cc.Vec2|cc.Point} vec Element to add to this Vec2.
+     */
+    _p.add = function(vec){   // = cc.kmVec2Add
         this.x += vec.x;
         this.y += vec.y;
         return this;
     };
 
-    proto.dot = function (vec) {   //cc.kmVec2Dot
+    /**
+     * Calculate the dot product between a Vec2 object and/or Point with this Vec2.
+     *
+     * @param {cc.Vec2|cc.Point} vec Element to add to this Vec2.
+     */
+    _p.dot = function (vec) {   //cc.kmVec2Dot
         return this.x * vec.x + this.y * vec.y;
     };
 
+    /**
+     * Subtract two Vec2 objects and/or Points.
+     *
+     * @param {cc.Vec2|cc.Point} pOut An object to receive the new value.
+     * @param {cc.Vec2|cc.Point} pV1  First element to subtract.
+     * @param {cc.Vec2|cc.Point} pV2  Second element to subtract.
+     */
     cc.math.Vec2.subtract = function (pOut, pV1, pV2) {      // = cc.kmVec2Subtract
         pOut.x = pV1.x - pV2.x;
         pOut.y = pV1.y - pV2.y;
         return pOut;
     };
 
-    proto.subtract = function(vec){     // = cc.kmVec2Subtract
+    /**
+     * Subtract a Vec2 object and/or Point from this Vec2.
+     *
+     * @param {cc.Vec2|cc.Point} vec Element to add to this Vec2.
+     */
+    _p.subtract = function(vec){     // = cc.kmVec2Subtract
         this.x -= vec.x;
         this.y -= vec.y;
         return this;
     };
 
-    proto.transform = function (mat3) {     // = cc.kmVec2Transform
+    /**
+     * Transform this Vec2 by a Mat3.
+     *
+     * @param  {cc.Mat3} mat3 Matrix to transform the vector.
+     * @return {cc.Vec2} This vector.
+     */
+    _p.transform = function (mat3) {     // = cc.kmVec2Transform
         var x = this.x, y = this.y;
         this.x = x * mat3.mat[0] + y * mat3.mat[3] + mat3.mat[6];
         this.y = x * mat3.mat[1] + y * mat3.mat[4] + mat3.mat[7];
@@ -99,15 +140,14 @@
         return pOut;
     };
 
-    proto.scale = function(s) {  // = cc.kmVec2Scale
+    _p.scale = function(s) {  // = cc.kmVec2Scale
         this.x *= s;
         this.y *= s;
         return this;
     };
 
-    proto.equals = function (vec) {    // = cc.kmVec2AreEqual
+    _p.equals = function (vec) {    // = cc.kmVec2AreEqual
         return (this.x < vec.x + cc.math.EPSILON && this.x > vec.x - cc.math.EPSILON) &&
             (this.y < vec.y + cc.math.EPSILON && this.y > vec.y - cc.math.EPSILON);
     };
 })(cc);
-
