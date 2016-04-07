@@ -404,35 +404,6 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
     },
 
     /**
-     * Returns z order of this node
-     * @function
-     * @return {Number}
-     * @deprecated since 3.0, please use getLocalZOrder instead
-     */
-    getZOrder: function () {
-        cc.log(cc._LogInfos.Node_getZOrder);
-        return this.getLocalZOrder();
-    },
-
-    /**
-     * <p>
-     *     Sets the Z order which stands for the drawing order, and reorder this node in its parent's children array.     <br/>
-     *                                                                                                                    <br/>
-     *      The Z order of node is relative to its "brothers": children of the same parent.                               <br/>
-     *      It's nothing to do with OpenGL's z vertex. This one only affects the draw order of nodes in cocos2d.          <br/>
-     *      The larger number it is, the later this node will be drawn in each message loop.                              <br/>
-     *      Please refer to setVertexZ(float) for the difference.
-     * </p>
-     * @function
-     * @param {Number} z Z order of this node.
-     * @deprecated since 3.0, please use setLocalZOrder instead
-     */
-    setZOrder: function (z) {
-        cc.log(cc._LogInfos.Node_setZOrder);
-        this.setLocalZOrder(z);
-    },
-
-    /**
      * <p>Defines the oder in which the nodes are renderer.                                                                               <br/>
      * Nodes that have a Global Z Order lower, are renderer first.                                                                        <br/>
      *                                                                                                                                    <br/>
@@ -1165,16 +1136,6 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
 
     /**
      * Returns a "local" axis aligned bounding box of the node. <br/>
-     * @deprecated since v3.0, please use getBoundingBox instead
-     * @return {cc.Rect}
-     */
-    boundingBox: function(){
-        cc.log(cc._LogInfos.Node_boundingBox);
-        return this.getBoundingBox();
-    },
-
-    /**
-     * Returns a "local" axis aligned bounding box of the node. <br/>
      * The returned box is relative only to its parent.
      * @function
      * @return {cc.Rect} The calculated bounding box of the node
@@ -1309,17 +1270,6 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
                 cleanup = true;
             this._parent.removeChild(this, cleanup);
         }
-    },
-
-    /**
-     * Removes this node itself from its parent node.  <br/>
-     * If the node orphan, then nothing happens.
-     * @deprecated since v3.0, please use removeFromParent() instead
-     * @param {Boolean} [cleanup=true] true if all actions and callbacks on this node should be removed, false otherwise.
-     */
-    removeFromParentAndCleanup: function (cleanup) {
-        cc.log(cc._LogInfos.Node_removeFromParentAndCleanup);
-        this.removeFromParent(cleanup);
     },
 
     /** <p>Removes a child from the container. It will also cleanup all running actions depending on the cleanup parameter. </p>
@@ -1781,17 +1731,6 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
     },
 
     /**
-     * Resumes all scheduled selectors and actions.<br/>
-     * This method is called internally by onEnter
-     * @function
-     * @deprecated since v3.0, please use resume() instead
-     */
-    resumeSchedulerAndActions: function () {
-        cc.log(cc._LogInfos.Node_resumeSchedulerAndActions);
-        this.resume();
-    },
-
-    /**
      * <p>Resumes all scheduled selectors and actions.<br/>
      * This method is called internally by onEnter</p>
      */
@@ -1799,17 +1738,6 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
         this.scheduler.resumeTarget(this);
         this.actionManager && this.actionManager.resumeTarget(this);
         cc.eventManager.resumeTarget(this);
-    },
-
-    /**
-     * <p>Pauses all scheduled selectors and actions.<br/>
-     * This method is called internally by onExit</p>
-     * @deprecated since v3.0, please use pause instead
-     * @function
-     */
-    pauseSchedulerAndActions: function () {
-        cc.log(cc._LogInfos.Node_pauseSchedulerAndActions);
-        this.pause();
     },
 
     /**
@@ -1891,14 +1819,6 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
     },
 
     /**
-     * @function
-     * @deprecated since v3.0, please use getParentToNodeTransform instead
-     */
-    parentToNodeTransform: function () {
-        return this.getParentToNodeTransform();
-    },
-
-    /**
      * Returns the world affine transform matrix. The matrix is in Pixels.
      * @function
      * @return {cc.AffineTransform}
@@ -1912,28 +1832,12 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
     },
 
     /**
-     * @function
-     * @deprecated since v3.0, please use getNodeToWorldTransform instead
-     */
-    nodeToWorldTransform: function(){
-        return this.getNodeToWorldTransform();
-    },
-
-    /**
      * Returns the inverse world affine transform matrix. The matrix is in Pixels.
      * @function
      * @return {cc.AffineTransform}
      */
     getWorldToNodeTransform: function () {
         return cc.affineTransformInvert(this.getNodeToWorldTransform());
-    },
-
-    /**
-     * @function
-     * @deprecated since v3.0, please use getWorldToNodeTransform instead
-     */
-    worldToNodeTransform: function () {
-        return this.getWorldToNodeTransform();
     },
 
     /**

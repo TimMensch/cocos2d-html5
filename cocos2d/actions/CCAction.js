@@ -60,18 +60,6 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
 
     /**
      * to copy object with deep copy.
-     *
-     * @deprecated since v3.0 please use .clone
-     *
-     * @return {cc.Action}
-     */
-    copy:function () {
-        cc.log("copy is deprecated. Please use clone instead.");
-        return this.clone();
-    },
-
-    /**
-     * to copy object with deep copy.
      * returns a clone of action.
      *
      * @return {cc.Action}
@@ -215,17 +203,6 @@ cc.Action = cc.Class.extend(/** @lends cc.Action# */{
 cc.action = function () {
     return new cc.Action();
 };
-
-/**
- * Please use cc.action instead. <br/>
- * Allocates and initializes the action.
- *
- * @deprecated since v3.0 please use cc.action() instead.
- * @static
- * @returns {cc.Action}
- */
-cc.Action.create = cc.action;
-
 
 /**
  * Base class actions that do have a finite time duration. <br/>
@@ -450,18 +427,6 @@ cc.speed = function (action, speed) {
 };
 
 /**
- * Please use cc.speed instead.
- * creates the action.
- *
- * @param {cc.ActionInterval} action
- * @param {Number} speed
- * @return {cc.Speed}
- * @static
- * @deprecated since v3.0 please use cc.speed() instead.
- */
-cc.Speed.create = cc.speed;
-
-/**
  * cc.Follow is an action that "follows" a node.
  *
  * @example
@@ -680,15 +645,3 @@ cc.Follow = cc.Action.extend(/** @lends cc.Follow# */{
 cc.follow = function (followedNode, rect) {
     return new cc.Follow(followedNode, rect);
 };
-
-/**
- * Please use cc.follow instead.
- * creates the action with a set boundary. <br/>
- * creates the action with no boundary set.
- * @param {cc.Node} followedNode
- * @param {cc.Rect} rect
- * @return {cc.Follow|Null} returns the cc.Follow object on success
- * @static
- * @deprecated since v3.0 please cc.follow() instead.
- */
-cc.Follow.create = cc.follow;

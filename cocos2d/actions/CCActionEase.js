@@ -140,17 +140,6 @@ cc.actionEase = function (action) {
 };
 
 /**
- * Please use cc.actionEase instead
- * creates the action of ActionEase
- *
- * @param {cc.ActionInterval} action
- * @return {cc.ActionEase}
- * @static
- * @deprecated since v3.0 please use cc.actionEase(action) instead.
- */
-cc.ActionEase.create = cc.actionEase;
-
-/**
  * Base class for Easing actions with rate parameters
  *
  * @class
