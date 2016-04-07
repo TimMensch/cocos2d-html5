@@ -50,6 +50,7 @@
             "cocos2d/kazmath/utility.js",
             "cocos2d/kazmath/mat3.js",
             "cocos2d/kazmath/mat4.js",
+            "cocos2d/kazmath/vec2.js",
             "cocos2d/kazmath/vec3.js",
             "cocos2d/kazmath/plane.js",
             "cocos2d/kazmath/quaternion.js",
