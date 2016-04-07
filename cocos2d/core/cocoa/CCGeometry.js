@@ -42,8 +42,8 @@ cc.Point = function (x, y) {
 /**
  * Helper function that creates a cc.Point.
  * @function
- * @param {Number|cc.Point} x a Number or a size object
- * @param {Number} y
+ * @param {Number|cc.Point} [x] a Number or a size object
+ * @param {Number} [y]
  * @return {cc.Point}
  * @example
  * var point1 = cc.p();
