@@ -18,6 +18,7 @@
   "homepage": "https://github.com/cocos2d/cocos2d-html5#readme",
   "dependencies": {
     "array-uniq": "^1.0.2",
+    "lodash": "^4.11.1",
     "node.extend": "^1.1.5"
   }
 }
