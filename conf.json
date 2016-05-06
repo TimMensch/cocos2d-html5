@@ -104,7 +104,27 @@
             "cocos2d/tilemap/CCTMXObjectGroup.js",
             "cocos2d/tilemap/CCTMXLayer.js",
             "cocos2d/parallax/CCParallaxNode.js",
-            "cocos2d/core/utils/CCProfiler.js"
+            "cocos2d/core/utils/CCProfiler.js",
+            "extensions/gui/control-extension/CCControl.js",
+            "extensions/gui/control-extension/CCControlButton.js",
+            "extensions/gui/control-extension/CCControlUtils.js",
+            "extensions/gui/control-extension/CCInvocation.js",
+            "extensions/gui/control-extension/CCMenuPassive.js",
+            "extensions/gui/control-extension/CCControlSaturationBrightnessPicker.js",
+            "extensions/gui/control-extension/CCControlHuePicker.js",
+            "extensions/gui/control-extension/CCControlColourPicker.js",
+            "extensions/gui/control-extension/CCControlSlider.js",
+            "extensions/gui/control-extension/CCControlSwitch.js",
+            "extensions/gui/control-extension/CCControlStepper.js",
+            "extensions/gui/control-extension/CCControlPotentiometer.js",
+            "extensions/gui/scrollview/CCScrollView.js",
+            "extensions/gui/scrollview/CCScrollViewCanvasRenderCmd.js",
+            "extensions/gui/scrollview/CCScrollViewWebGLRenderCmd.js",
+            "extensions/gui/scrollview/CCSorting.js",
+            "extensions/gui/scrollview/CCTableView.js",
+            "extensions/ccui/base-classes/UIScale9Sprite.js",
+            "extensions/ccui/base-classes/UIScale9SpriteCanvasRenderCmd.js",
+            "extensions/ccui/base-classes/UIScale9SpriteWebGLRenderCmd.js"
         ]
     },
     "opts": {
