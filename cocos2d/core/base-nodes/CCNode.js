@@ -369,16 +369,25 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
     },
 
     /**
-     * <p> LocalZOrder is the 'key' used to sort the node relative to its siblings.                                    <br/>
-     *                                                                                                                 <br/>
-     * The Node's parent will sort all its children based ont the LocalZOrder value.                                   <br/>
-     * If two nodes have the same LocalZOrder, then the node that was added first to the children's array              <br/>
-     * will be in front of the other node in the array.                                                                <br/>
-     * <br/>
-     * Also, the Scene Graph is traversed using the "In-Order" tree traversal algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order )
-     * <br/>
-     * And Nodes that have LocalZOder values < 0 are the "left" subtree                                                 <br/>
-     * While Nodes with LocalZOder >=0 are the "right" subtree.    </p>
+     * Set the localZOrder of this Node.
+     *
+     * <p>The localZOrder is used to sort the Node relative to its siblings.</p>
+     *
+     * <p>The Node's parent will sort all its children based on the localZOrder
+     * value. The sort is stable, so if two nodes have the same localZOrder,
+     * then the Node that was added first to the array of children will be
+     * in front of the other node in the array.</p>
+     *
+     * <p>The Scene Graph is traversed using the "In-Order" tree traversal
+     * algorithm ( http://en.wikipedia.org/wiki/Tree_traversal#In-order ).
+     * So Nodes that have `localZOrder<0` are placed in the "left" subtree, while
+     * Nodes with `localZOrder>=0` are placed in the "right" subtree. Practically
+     * speaking, that means that child Nodes with negative localZOrder will appear
+     * behind this node, increasingly deep in the stack as the magnitude of the
+     * negative number gets higher, while child Nodes with positive values will be
+     * increasingly close to the viewer, with this Node rendered right at zero.
+     * </p>
+     *
      * @function
      * @param {Number} localZOrder
      */
@@ -397,7 +406,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
     /**
      * Returns the local Z order of this node.
      * @function
-     * @returns {Number} The local (relative to its siblings) Z order.
+     * @returns {Number} The local (relative to its siblings and parent) Z order.
      */
     getLocalZOrder: function () {
         return this._localZOrder;
@@ -1207,7 +1216,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * <p>If the child is added to a 'running' node, then 'onEnter' and 'onEnterTransitionDidFinish' will be called immediately.</p>
      * @function
      * @param {cc.Node} child  A child node
-     * @param {Number} [localZOrder=]  Z order for drawing priority. Please refer to setZOrder(int)
+     * @param {Number} [localZOrder=]  Z order for drawing priority. Please refer to setLocalZOrder(int)
      * @param {Number|String} [tag=]  An integer or a name to identify the node easily. Please refer to setTag(int) and setName(string)
      */
     addChild: function (child, localZOrder, tag) {
@@ -1389,7 +1398,7 @@ cc.Node = cc.Class.extend(/** @lends cc.Node# */{
      * The child MUST be already added.
      * @function
      * @param {cc.Node} child An already added child node. It MUST be already added.
-     * @param {Number} zOrder Z order for drawing priority. Please refer to setZOrder(int)
+     * @param {Number} zOrder Z order for drawing priority. Please refer to setLocalZOrder(int)
      */
     reorderChild: function (child, zOrder) {
         cc.assert(child, cc._LogInfos.Node_reorderChild);
