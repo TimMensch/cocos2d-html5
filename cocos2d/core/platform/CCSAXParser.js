@@ -25,7 +25,9 @@
  ****************************************************************************/
 
 /**
- * A SAX Parser
+ * A misnamed DOM Parser. (A SAX parser uses callbacks; a DOM parser returns
+ * the entire parsed object.)
+ *
  * @class
  * @name cc.saxParser
  * @extends cc.Class
