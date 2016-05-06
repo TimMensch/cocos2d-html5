@@ -33,6 +33,7 @@ var memberTypes = {
     "CanvasContextWrapper":"any",
     "*" : "any",
     "enum":"number",
+    "cc.rect":"cc.Rect",
     "WebGLUniformLocation":"any",
     "WebGLProgram":"number",
     "WebGLTexture":"number",
@@ -56,6 +57,11 @@ if (mode==="typescript") {
     memberTypes.function = "any";
     memberTypes.null = "any";
     memberTypes.Null = "any";
+    // let keys = Object.keys(memberTypes);
+    // for (key of keys) {
+    //     let value = memberTypes[key];
+    //     memberTypes["cc."+key] = "cc."+value;
+    // }
 }
 
 function simpleClass(name) {
@@ -65,6 +71,15 @@ function simpleClass(name) {
         children:{}
     }
 }
+function simpleVar(name,type) {
+    return {
+        kind:'member',
+        name:name,
+        type:type,
+        children:{}
+    }
+}
+
 var tree = {
     name:"root",
     kind:"namespace",
@@ -87,7 +102,8 @@ var tree = {
             kind: "class",
             name: "cc",
             children:{
-                Image: simpleClass("Image")
+                Image: simpleClass("Image"),
+                Scale9Sprite: simpleVar("Scale9Sprite","typeof ccui.Scale9Sprite")
             }
         },
     }
@@ -244,9 +260,13 @@ function dumpObjectTypeScript(node,isClass,isNamespace) {
                 (node.name[0]>="A" && node.name[0]<="Z") ||
                 forceClass.hasOwnProperty(node.name)) {
                 console.log(`${globalDec()} class ${node.name} ${extendString} {`);
-                var ctr = extend({},node);
-                ctr = extend(ctr,{kind:"function",name:"constructor",children:{}});
-                dumpObjectTypeScript(ctr,true);
+
+                if (node.params) {
+                    var ctr = extend({},node);
+                    ctr = extend(ctr,{kind:"function",name:"constructor",children:{}});
+                    dumpObjectTypeScript(ctr,true);
+                    node.constructorSaved = true;
+                }
                 dumpChildren(node,true);
             } else {
                 inClass = false;
@@ -266,6 +286,9 @@ function dumpObjectTypeScript(node,isClass,isNamespace) {
         case "function" :
             if (node.name==="ctor" && node.parentNode && node.parentNode.kind==="namespace") {
                 break;
+            }
+            if (node.constructorParams) {
+                writeFunction("constructor",node.constructorParams,"",node.scope,isClass);
             }
             var returns = fixType(node.returns || "any");
             node.params = node.params || "";
@@ -492,9 +515,9 @@ function getNode(parent,doclet) {
     return node;
 }
 function fixType(type) {
-    type=type.replace(/^cp./,"");
-    type=type.replace(/^ccui./,"");
-    type=type.replace(/^cc./,"");
+    // type=type.replace(/^cp./,"");
+    // type=type.replace(/^ccui./,"");
+    // type=type.replace(/^cc./,"");
     if (type in memberTypes) {
         return memberTypes[type];
     }
@@ -778,10 +801,9 @@ exports.handlers = {
         if (mode==="typescript") {
             genericParams="p1:any,p2?:any,p3?:any,p4?:any,p5?:any,p6?:any";
         }
-
         if (e.doclet.name==="ctor") {
+            thisNode.constructorParams=thisNode.params;
             thisNode.params = genericParams;
-
             if (mode==="typescript") {
                 if (thisNode.scope !== "static") {
                     thisNode.returns = "this";
