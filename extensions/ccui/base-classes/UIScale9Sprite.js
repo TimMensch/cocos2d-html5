@@ -209,7 +209,7 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
      * @function
      * @param {string|cc.SpriteFrame} file file name of texture or a SpriteFrame
      * @param {cc.Rect} rectOrCapInsets
-     * @param {cc.Rect} capInsets
+     * @param {cc.Rect} [capInsets]
      * @returns {Scale9Sprite}
      */
     ctor: function (file, rectOrCapInsets, capInsets) {
@@ -701,11 +701,11 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
         var t = cc.affineTransformMakeIdentity();
         if (!rotated) {
             t = cc.affineTransformTranslate(t, rect.x, rect.y);
-        
+
             rotatedLeftTopBoundsOriginal = cc.rectApplyAffineTransform(rotatedLeftTopBoundsOriginal, t);
             rotatedCenterBoundsOriginal = cc.rectApplyAffineTransform(rotatedCenterBoundsOriginal, t);
             rotatedRightBottomBoundsOriginal = cc.rectApplyAffineTransform(rotatedRightBottomBoundsOriginal, t);
-        
+
             rotatedCenterBounds = cc.rectApplyAffineTransform(rotatedCenterBounds, t);
             rotatedRightBottomBounds = cc.rectApplyAffineTransform(rotatedRightBottomBounds, t);
             rotatedLeftBottomBounds = cc.rectApplyAffineTransform(rotatedLeftBottomBounds, t);
@@ -719,11 +719,11 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
         } else {
             t = cc.affineTransformTranslate(t, rect.height + rect.x, rect.y);
             t = cc.affineTransformRotate(t, 1.57079633);
-        
+
             leftTopBoundsOriginal = cc.rectApplyAffineTransform(leftTopBoundsOriginal, t);
             centerBoundsOriginal = cc.rectApplyAffineTransform(centerBoundsOriginal, t);
             rightBottomBoundsOriginal = cc.rectApplyAffineTransform(rightBottomBoundsOriginal, t);
-        
+
             centerBounds = cc.rectApplyAffineTransform(centerBounds, t);
             rightBottomBounds = cc.rectApplyAffineTransform(rightBottomBounds, t);
             leftBottomBounds = cc.rectApplyAffineTransform(leftBottomBounds, t);
@@ -733,11 +733,11 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
             leftCenterBounds = cc.rectApplyAffineTransform(leftCenterBounds, t);
             centerBottomBounds = cc.rectApplyAffineTransform(centerBottomBounds, t);
             centerTopBounds = cc.rectApplyAffineTransform(centerTopBounds, t);
-        
+
             rotatedLeftTopBoundsOriginal.x = leftTopBoundsOriginal.x;
             rotatedCenterBoundsOriginal.x = centerBoundsOriginal.x;
             rotatedRightBottomBoundsOriginal.x = rightBottomBoundsOriginal.x;
-        
+
             rotatedCenterBounds.x = centerBounds.x;
             rotatedRightBottomBounds.x = rightBottomBounds.x;
             rotatedLeftBottomBounds.x = leftBottomBounds.x;
@@ -747,12 +747,12 @@ ccui.Scale9Sprite = cc.Scale9Sprite = cc.Node.extend(/** @lends ccui.Scale9Sprit
             rotatedLeftCenterBounds.x = leftCenterBounds.x;
             rotatedCenterBottomBounds.x = centerBottomBounds.x;
             rotatedCenterTopBounds.x = centerTopBounds.x;
-        
-        
+
+
             rotatedLeftTopBoundsOriginal.y = leftTopBoundsOriginal.y;
             rotatedCenterBoundsOriginal.y = centerBoundsOriginal.y;
             rotatedRightBottomBoundsOriginal.y = rightBottomBoundsOriginal.y;
-        
+
             rotatedCenterBounds.y = centerBounds.y;
             rotatedRightBottomBounds.y = rightBottomBounds.y;
             rotatedLeftBottomBounds.y = leftBottomBounds.y;
