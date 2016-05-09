@@ -12,23 +12,20 @@ var mode = "typescript";
 
 var memberTypes = {
     "Node.RenderCmd" :"any",
-    "math.Matrix4":"Matrix4",
     "Number":"number",
     "Boolean" :"boolean",
     "String" :"string",
     "Null" :"null",
     "Array":"Array<any>",
     "object":"any",
-    "Class":"any",
     "Bool":"boolean",
     "bool":"boolean",
     "ProgressTimer.TYPE_RADIAL":"number",
     "ProgressTimer.TYPE_BAR":"number",
     "CatmullRomBy":"any",
-    "Widget":"any",
     "Component":"any",
     "DirectorDelegate":"any",
-    "kmMat4":"any",
+    "kmMat4":"cc.math.Matrix4",
     "cc.SAXParser": "any",
     "cc.Node.RenderCmd": "any",
     "cc.Vec2":"cc.math.Vec2",
@@ -205,7 +202,8 @@ function dumpObjectTypeScript(node,isClass,isNamespace) {
         "AABB":true,
         "ScrollView":true,
         "LayoutParameter":true,
-        "Margin":true
+        "Margin":true,
+        "NodeGrid":true
     };
 
     if (forceClass.hasOwnProperty(node.name)) {
@@ -879,6 +877,13 @@ exports.handlers = {
         }
         if (e.doclet.name==='addChild') {
             thisNode.params = "child:cc.Node,localZOrder:number,tag?:number|string|cc.Point";
+        }
+        if (e.doclet.name==='onTouchBegan' || e.doclet.name==='onTouchCancelled') {
+            thisNode.params = "touch:cc.Touch,event:cc.Event";
+            thisNode.returns = "boolean" ;
+        }
+        if (e.doclet.name==="getVirtualRenderer") {
+            thisNode.returns = "ccui.Widget";
         }
         if (e.doclet.name==='removeChild') {
             thisNode.params = "child:cc.Node";
