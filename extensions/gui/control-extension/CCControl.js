@@ -28,36 +28,105 @@
 /** Number of kinds of control event. */
 cc.CONTROL_EVENT_TOTAL_NUMBER = 9;
 
-/** Kinds of possible events for the control objects. */
-cc.CONTROL_EVENT_TOUCH_DOWN = 1 << 0;    // A touch-down event in the control.
-cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE = 1 << 1;    // An event where a finger is dragged inside the bounds of the control.
-cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE = 1 << 2;    // An event where a finger is dragged just outside the bounds of the control.
-cc.CONTROL_EVENT_TOUCH_DRAG_ENTER = 1 << 3;    // An event where a finger is dragged into the bounds of the control.
-cc.CONTROL_EVENT_TOUCH_DRAG_EXIT = 1 << 4;    // An event where a finger is dragged from within a control to outside its bounds.
-cc.CONTROL_EVENT_TOUCH_UP_INSIDE = 1 << 5;    // A touch-up event in the control where the finger is inside the bounds of the control.
-cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE = 1 << 6;    // A touch-up event in the control where the finger is outside the bounds of the control.
-cc.CONTROL_EVENT_TOUCH_CANCEL = 1 << 7;    // A system event canceling the current touches for the control.
-cc.CONTROL_EVENT_VALUECHANGED = 1 << 8;    // A touch dragging or otherwise manipulating a control; causing it to emit a series of different values.
+/**
+ * Kinds of possible events for the control objects.
+ * @typedef {number} CCControlEvent
+ *
+ * @see cc.CONTROL_EVENT_TOUCH_DOWN
+ * @see cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE
+ * @see cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE
+ * @see cc.CONTROL_EVENT_TOUCH_DRAG_ENTER
+ * @see cc.CONTROL_EVENT_TOUCH_DRAG_EXIT
+ * @see cc.CONTROL_EVENT_TOUCH_UP_INSIDE
+ * @see cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE
+ * @see cc.CONTROL_EVENT_TOUCH_CANCEL
+ * @see cc.CONTROL_EVENT_VALUECHANGED
+ */
+
+/**
+ * A touch-down event in the control.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_DOWN = 1 << 0;
+/**
+ * An event where a finger is dragged inside the bounds of the control.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_DRAG_INSIDE = 1 << 1;
+/**
+ * An event where a finger is dragged just outside the bounds of the control.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_DRAG_OUTSIDE = 1 << 2;
+/**
+ * An event where a finger is dragged into the bounds of the control.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_DRAG_ENTER = 1 << 3;
+/**
+ * An event where a finger is dragged from within a control to outside its bounds.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_DRAG_EXIT = 1 << 4;
+/**
+ * A touch-up event in the control where the finger is inside the bounds of the control.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_UP_INSIDE = 1 << 5;
+/**
+ * A touch-up event in the control where the finger is outside the bounds of the control.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_UP_OUTSIDE = 1 << 6;
+/**
+ * A system event canceling the current touches for the control.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_TOUCH_CANCEL = 1 << 7;
+/**
+ * A touch dragging or otherwise manipulating a control; causing it to emit a series
+ * of different values.
+ * @type {number}
+ */
+cc.CONTROL_EVENT_VALUECHANGED = 1 << 8;
+
+/**
+ * The set of states a control can be in.
+ * @typedef {number} CCControlState
+ * @see cc.CONTROL_STATE_NORMAL
+ * @see cc.CONTROL_STATE_HIGHLIGHTED
+ * @see cc.CONTROL_STATE_DISABLED
+ * @see cc.CONTROL_STATE_SELECTED
+ * @see cc.CONTROL_STATE_INITIAL
+ */
 
 /** The normal or default state of a control.
-  * That is, the control is enabled but neither
-  * selected nor highlighted.
-  */
+ * That is, the control is enabled but neither
+ * selected nor highlighted.
+ * @type {number}
+ */
 cc.CONTROL_STATE_NORMAL = 1 << 0;
 /** Highlighted state of a control. A control enters this state when a
-  * touch down, drag inside or drag enter is performed. You can
-  * retrieve and set this value through the highlighted property.
-  */
+ * touch down, drag inside or drag enter is performed. You can
+ * retrieve and set this value through the highlighted property.
+ * @type {number}
+ */
 cc.CONTROL_STATE_HIGHLIGHTED = 1 << 1;
 /** Disabled state of a control. This state indicates that the control
-  * is currently disabled. You can retrieve and set this value through
-  * the enabled property. */
-cc.CONTROL_STATE_DISABLED = 1 << 2; 
+ * is currently disabled. You can retrieve and set this value through
+ * the enabled property.
+ * @type {number}
+ */
+cc.CONTROL_STATE_DISABLED = 1 << 2;
 /** Selected state of a control. This state indicates that the control
-  * is currently selected. You can retrieve and set this value through
-  * the selected property. */
+ * is currently selected. You can retrieve and set this value through
+ * the selected property.
+ * @type {number}
+ */
 cc.CONTROL_STATE_SELECTED = 1 << 3;
-/** Initial control state; unused? Duplicate of CONTROL_STATE_SELECTED.  */
+/** Initial control state; unused? Duplicate of CONTROL_STATE_SELECTED.
+ * @type {number}
+ */
 cc.CONTROL_STATE_INITIAL = 1 << 3;
 
 /**
