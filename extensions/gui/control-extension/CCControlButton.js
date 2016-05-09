@@ -62,6 +62,13 @@ cc.ControlButton = cc.Control.extend(/** @lends cc.ControlButton# */{
     _marginH: 0,
     _className: "ControlButton",
 
+    /**
+     * Constructor.
+     *
+     * @param  {LabelTTF} label          Text label.
+     * @param  {Scale9Sprite} [backgroundSprite] [description]
+     * @param  {number} [fontSize]         [description]
+     */
     ctor: function (label, backgroundSprite, fontSize) {
         cc.Control.prototype.ctor.call(this);
         this._preferredSize = cc.size(0, 0);
@@ -684,5 +691,3 @@ _p = null;
 cc.ControlButton.create = function (label, backgroundSprite, fontSize) {
     return new cc.ControlButton(label, backgroundSprite, fontSize);
 };
-
-
