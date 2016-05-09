@@ -32,10 +32,10 @@
         this._needDraw = true;
 
         this._vertices = [
-            {x: 0, y: 0, z: 0},
-            {x: 0, y: 0, z: 0},
-            {x: 0, y: 0, z: 0},
-            {x: 0, y: 0, z: 0}
+            {x: 0, y: 0, z: 0}, // tl
+            {x: 0, y: 0, z: 0}, // bl
+            {x: 0, y: 0, z: 0}, // tr
+            {x: 0, y: 0, z: 0}  // br
         ];
         var length = this.vertexBytesPerUnit;
         var bufInfo = cc.renderer.requestBuffer(length);
@@ -99,8 +99,7 @@
             
             this._setTextureCoords(this._node._rect);
             this._updateColor();
-            this._bufferDirty = true;
-            this._buffer.setDirty();
+            this._updateVertexBuffer();
         }
     };
 
@@ -308,9 +307,7 @@
         this._buffer.setDirty();
     };
 
-    proto.transform = function (parentCmd, recursive) {
-        cc.Node.WebGLRenderCmd.prototype.transform.call(this, parentCmd, recursive);
-
+    proto._updateVertexBuffer = function () {
         if (this._buffer) {
             var mat = this._stackMatrix.mat,
                 vertices = this._vertices,
@@ -321,7 +318,6 @@
             for (i = 0; i < 4; ++i) {
                 x = vertices[i].x;
                 y = vertices[i].y;
-                z = vertices[i].z;
                 buffer[offset] = x * mat[0] + y * mat[4] + mat[12];
                 buffer[offset+1] = x * mat[1] + y * mat[5] + mat[13];
                 buffer[offset+2] = mat[14];
@@ -331,7 +327,12 @@
             this._bufferDirty = true;
             this._buffer.setDirty();
         }
-        
+    };
+
+    proto.transform = function (parentCmd, recursive) {
+        cc.Node.WebGLRenderCmd.prototype.transform.call(this, parentCmd, recursive);
+
+        this._updateVertexBuffer();
         this._dirty = true;     //use for batching
         this._savedDirtyFlag = true;
     };
@@ -521,6 +522,10 @@
         }
     };
 
+    proto.needDraw = function () {
+        return (this._buffer && this._node._texture);
+    };
+
     proto.rendering = function (ctx) {
         var node = this._node, locTexture = node._texture;
         if (!this._buffer || (locTexture && (!locTexture._textureLoaded || !node._rect.width || !node._rect.height)) || !this._displayedOpacity)
@@ -545,7 +550,9 @@
                 //     this._bufferDirty = false;
                 // }
                 if (_resetPointers || _bufferchanged) {
-                    cc.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POS_COLOR_TEX);
+                    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
+                    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
+                    gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_TEX_COORDS);
                     gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 24, 0);
                     gl.vertexAttribPointer(cc.VERTEX_ATTRIB_COLOR, 4, gl.UNSIGNED_BYTE, true, 24, 12);
                     gl.vertexAttribPointer(cc.VERTEX_ATTRIB_TEX_COORDS, 2, gl.FLOAT, false, 24, 16);
@@ -555,7 +562,7 @@
             }
         } else {
             program.use();
-            program._setUniformForMVPMatrixWithMat4(this._stackMatrix);
+            program._updateProjectionUniform();
 
             cc.glBlendFunc(node._blendFunc.src, node._blendFunc.dst);
 
@@ -564,7 +571,8 @@
             //     gl.bufferSubData(gl.ARRAY_BUFFER, this._bufferOffset, this._float32View);
             //     this._bufferDirty = false;
             // }
-            cc.glEnableVertexAttribs(cc.VERTEX_ATTRIB_FLAG_POSITION | cc.VERTEX_ATTRIB_FLAG_COLOR);
+            gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_POSITION);
+            gl.enableVertexAttribArray(cc.VERTEX_ATTRIB_COLOR);
             gl.vertexAttribPointer(cc.VERTEX_ATTRIB_POSITION, 3, gl.FLOAT, false, 24, 0);
             gl.vertexAttribPointer(cc.VERTEX_ATTRIB_COLOR, 4, gl.UNSIGNED_BYTE, true, 24, 12);
             gl.drawArrays(gl.TRIANGLE_STRIP, this._bufferOffset / (this.vertexBytesPerUnit/4), 4);
