@@ -86,6 +86,8 @@ _p = null;
 
 /**
  * Sole purpose of this delegate is to single touch event in this version.
+ * @class
+ * @extends cc.ScrollViewDelegate
  */
 cc.TableViewDelegate = cc.ScrollViewDelegate.extend(/** @lends cc.TableViewDelegate# */{
     /**
@@ -132,6 +134,8 @@ cc.TableViewDelegate = cc.ScrollViewDelegate.extend(/** @lends cc.TableViewDeleg
 
 /**
  * Data source that governs table backend data.
+ * @class
+ * @extends cc.Class
  */
 cc.TableViewDataSource = cc.Class.extend(/** @lends cc.TableViewDataSource# */{
     /**

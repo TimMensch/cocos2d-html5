@@ -94,9 +94,9 @@ ccui.MarginZero = function(){
 /**
  * Layout parameter contains a margin and layout parameter type. It uses for ccui.LayoutManager.
  * @class
- * @extends ccui.Class
+ * @extends cc.Class
  */
-ccui.LayoutParameter = ccui.Class.extend(/** @lends ccui.LayoutParameter# */{
+ccui.LayoutParameter = cc.Class.extend(/** @lends ccui.LayoutParameter# */{
     _margin: null,
     _layoutParameterType: null,
 
@@ -175,7 +175,7 @@ ccui.LayoutParameter = ccui.Class.extend(/** @lends ccui.LayoutParameter# */{
 
 /**
  * allocates and initializes a LayoutParameter.
- * @constructs
+ * @constructs LayoutParameter
  * @return {ccui.LayoutParameter}
  */
 ccui.LayoutParameter.create = function () {
@@ -249,7 +249,7 @@ ccui.LinearLayoutParameter = ccui.LayoutParameter.extend(/** @lends ccui.LinearL
 
 /**
  * allocates and initializes a LinearLayoutParameter.
- * @constructs
+ * @constructs ccui.LinearLayoutParameter
  * @return {ccui.LinearLayoutParameter}
  * @deprecated since v3.0, please use new construction instead
  */

@@ -49,9 +49,24 @@ cc.convertDistanceFromPointToInch = function(pointDis){
     return (pointDis * factor) / 160;               // CCDevice::getDPI() default value
 };
 
-cc.ScrollViewDelegate = cc.Class.extend({
+/**
+ * An interface for a callback that receives notifications when
+ * a ScrollView either scrolls or zooms.
+ * @class
+ * @extends cc.Class
+ */
+cc.ScrollViewDelegate = cc.Class.extend(/** @lends cc.ScrollViewDelegate# */{
+
+    /**
+     * Callback on scroll.
+     * @param  {ScrollView} view The ScrollView sending the message.
+     */
     scrollViewDidScroll:function (view) {
     },
+    /**
+     * Callback on zoom.
+     * @param  {ScrollView} view The ScrollView sending the message.
+     */
     scrollViewDidZoom:function (view) {
     }
 });
@@ -698,7 +713,7 @@ cc.ScrollView = cc.Layer.extend(/** @lends cc.ScrollView# */{
         //check to see if offset lies within the inset bounds
         var newX = this._container.getPositionX();
         var newY = this._container.getPositionY();
-        
+
         locScrollDistance.x = locScrollDistance.x * SCROLL_DEACCEL_RATE;
         locScrollDistance.y = locScrollDistance.y * SCROLL_DEACCEL_RATE;
 

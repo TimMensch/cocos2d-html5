@@ -367,7 +367,7 @@ ccui.ListView = ccui.ScrollView.extend(/** @lends ccui.ListView# */{
 
     /**
      * Set magnetic type of ListView.
-     * @param {ccui.ListView.MAGNETIC_NONE|ccui.ListView.MAGNETIC_CENTER,ccui.ListView.MAGNETIC_BOTH_END|ccui.ListView.MAGNETIC_LEFT|ccui.ListView.MAGNETIC_RIGHT|ccui.ListView.MAGNETIC_TOP|ccui.ListView.MAGNETIC_BOTTOM} magneticType
+     * @param {ccui.ListView.MAGNETIC_NONE|ccui.ListView.MAGNETIC_CENTER|ccui.ListView.MAGNETIC_BOTH_END|ccui.ListView.MAGNETIC_LEFT|ccui.ListView.MAGNETIC_RIGHT|ccui.ListView.MAGNETIC_TOP|ccui.ListView.MAGNETIC_BOTTOM} magneticType
      */
     setMagneticType: function(magneticType)
     {
