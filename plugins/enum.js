@@ -29,6 +29,11 @@ var memberTypes = {
     "Component":"any",
     "DirectorDelegate":"any",
     "kmMat4":"any",
+    "cc.SAXParser": "any",
+    "cc.Node.RenderCmd": "any",
+    "cc.Vec2":"cc.math.Vec2",
+    "cc.Vec3":"cc.math.Vec3",
+    "cc.Matrix":"cc.math.Matrix",
     "SAXParser":"any",
     "CanvasContextWrapper":"any",
     "*" : "any",
@@ -79,6 +84,14 @@ function simpleVar(name,type) {
         children:{}
     }
 }
+function simpleType(name,type) {
+    return {
+        kind:'type',
+        name:name,
+        type:type,
+        children:{}
+    }
+}
 
 var tree = {
     name:"root",
@@ -103,7 +116,7 @@ var tree = {
             name: "cc",
             children:{
                 Image: simpleClass("Image"),
-                Scale9Sprite: simpleVar("Scale9Sprite","typeof ccui.Scale9Sprite")
+                Scale9Sprite: simpleType("Scale9Sprite","ccui.Scale9Sprite")
             }
         },
     }
@@ -189,7 +202,10 @@ function dumpObjectTypeScript(node,isClass,isNamespace) {
         "Camera":true,
         "imeDispatcher":true,
         "saxParser":true,
-        "AABB":true
+        "AABB":true,
+        "ScrollView":true,
+        "LayoutParameter":true,
+        "Margin":true
     };
 
     if (forceClass.hasOwnProperty(node.name)) {
@@ -288,10 +304,10 @@ function dumpObjectTypeScript(node,isClass,isNamespace) {
                 break;
             }
             if (node.constructorParams) {
-                writeFunction("constructor",node.constructorParams,"",node.scope,isClass);
+                writeFunction("constructor",fixParams(node.constructorParams),"",node.scope,isClass);
             }
             var returns = fixType(node.returns || "any");
-            node.params = node.params || "";
+            node.params = fixParams(node.params) || "";
             var name= node.name;
 
             if (name.includes(".")) {
@@ -313,13 +329,17 @@ function dumpObjectTypeScript(node,isClass,isNamespace) {
             var type = node.type || "any";
             if (isClass) {
                 if (node.scope==="static") {
-                    console.log("\tstatic",node.name,":"+type+";");
+                    console.log("\tstatic",node.name,":"+fixType(type)+";");
                 } else {
-                    console.log("\t"+node.name,":"+type+";");
+                    console.log("\t"+node.name,":"+fixType(type)+";");
                 }
             } else {
-                console.log(`${globalDec()} let ${node.name}:${type};`);
+                console.log(`${globalDec()} let ${node.name}:${fixType(type)};`);
             }
+            break;
+        case "type" :
+            var type = node.type || "any";
+            console.log(`${globalDec()} type ${node.name}=${type};`);
             break;
         default:
 //            console.log("what kind?",node);
@@ -518,10 +538,52 @@ function fixType(type) {
     // type=type.replace(/^cp./,"");
     // type=type.replace(/^ccui./,"");
     // type=type.replace(/^cc./,"");
+    if (type.indexOf("|")>=0) {
+        // If there's a bar, return each of the separate types combined
+        // together.
+        let found = {};
+
+        return _.reduce(_.map(type.split("|"),fixType),(acc,value,index)=>{
+            if (index===1) {
+                found[acc] = true;
+            }
+            // Ignore any value we've seen already
+            if (found.hasOwnProperty(value)) {
+                return acc;
+            }
+            found[value] = true;
+            return acc+"|"+value;
+        });
+    }
     if (type in memberTypes) {
         return memberTypes[type];
     }
+    if (type.replace(/^cc[.]/,"") in memberTypes) {
+        return memberTypes[type.replace(/^cc[.]/,"")];
+    }
+    if (type.replace(/^ccui[.]/,"") in memberTypes) {
+        return memberTypes[type.replace(/^ccui[.]/,"")];
+    }
     return type;
+}
+
+function fixParams(params) {
+    if (!params) {
+        return params;
+    }
+    if (params.indexOf(",")>=0) {
+        return _.reduce(_.map(params.split(","),fixParams),(acc,value)=>{
+            return acc+","+value;
+        });
+    }
+    // If we're here, then it's a single parameter
+    let s = params.split(":");
+    // Pull the parameter name off the front
+    let v = s.shift();
+    // Join all the rest together; some parameter types have a colon in them,
+    // so we need to re-join them
+    let type = fixType(s.join(":"));
+    return v+":"+type;
 }
 
 function countLinesUntil(source,cursor) {
@@ -693,8 +755,8 @@ exports.handlers = {
         }
         if (e.doclet.type) {
             thisNode.type = getTypes(e.doclet.type);
-
             memberTypes[e.doclet.name]= getTypes(e.doclet.type);
+            memberTypes[e.doclet.longname]= getTypes(e.doclet.type);
         }
         if (e.doclet.params) {
             var params = e.doclet.params;
@@ -816,19 +878,19 @@ exports.handlers = {
             thisNode.params = genericParams;
         }
         if (e.doclet.name==='addChild') {
-            thisNode.params = "child:Node,localZOrder:number,tag?:number|string|Point";
+            thisNode.params = "child:cc.Node,localZOrder:number,tag?:number|string|cc.Point";
         }
         if (e.doclet.name==='removeChild') {
-            thisNode.params = "child:Node";
+            thisNode.params = "child:cc.Node";
         }
         if (e.doclet.name==="reorderChild") {
-            thisNode.params = "child:Node,zOrder:number";
+            thisNode.params = "child:cc.Node,zOrder:number";
         }
         if (e.doclet.name==='startWithTarget') {
-            thisNode.params = "target:Node";
+            thisNode.params = "target:cc.Node";
         }
         if (e.doclet.name==='reverse') {
-            thisNode.returns = "Action";
+            thisNode.returns = "cc.Action";
         }
         if (e.doclet.name==='initWithDuration') {
             thisNode.params = genericParams;
