@@ -431,6 +431,10 @@
             "extensions/gui/scrollview/CCScrollViewWebGLRenderCmd.js",
             "extensions/gui/scrollview/CCSorting.js",
             "extensions/gui/scrollview/CCTableView.js",
+            "extensions/ccui/base-classes/CCProtectedNode.js",
+            "extensions/ccui/base-classes/CCProtectedNodeCanvasRenderCmd.js",
+            "extensions/ccui/base-classes/CCProtectedNodeWebGLRenderCmd.js",
+            "extensions/ccui/system/CocosGUI.js",
             "extensions/ccui/base-classes/UIScale9Sprite.js",
             "extensions/ccui/base-classes/UIScale9SpriteCanvasRenderCmd.js",
             "extensions/ccui/base-classes/UIScale9SpriteWebGLRenderCmd.js"
