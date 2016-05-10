@@ -113,7 +113,8 @@ var tree = {
             name: "cc",
             children:{
                 Image: simpleClass("Image"),
-                Scale9Sprite: simpleType("Scale9Sprite","ccui.Scale9Sprite")
+                Scale9SpriteType: simpleType("Scale9Sprite","ccui.Scale9Sprite"),
+                Scale9Sprite: simpleVar("Scale9Sprite","typeof ccui.Scale9Sprite")
             }
         },
     }
@@ -876,7 +877,7 @@ exports.handlers = {
             thisNode.params = genericParams;
         }
         if (e.doclet.name==='addChild') {
-            thisNode.params = "child:cc.Node,localZOrder:number,tag?:number|string|cc.Point";
+            thisNode.params = "child:cc.Node,localZOrder?:number,tag?:number|string|cc.Point";
         }
         if (e.doclet.name==='onTouchBegan' || e.doclet.name==='onTouchCancelled') {
             thisNode.params = "touch:cc.Touch,event:cc.Event";
